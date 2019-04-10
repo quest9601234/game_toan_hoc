@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/green"
+    tools:context=".quizActivity">
+
+    <TextView
+        android:id="@+id/tvw_countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="00:03"
+        android:textSize="50dp" />
+
+    <TextView
+        android:id="@+id/tvw_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="score:0"
+        android:textSize="50dp" />
+
+    <TextView
+        android:id="@+id/cauhoi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="270dp"
+        android:text="1+3=4"
+        android:textSize="60dp" />
+
+    <Button
+        android:id="@+id/btn_true"
+        android:layout_width="188dp"
+        android:layout_height="162dp"
+        android:layout_alignParentBottom="true"
+        android:text="true"
+        android:textSize="50dp" />
+
+    <Button
+        android:id="@+id/btn_false"
+        android:layout_width="188dp"
+        android:layout_height="162dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="false"
+        android:textSize="50dp" />
+
+
+</RelativeLayout>
