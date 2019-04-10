@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/green"
+    tools:context=".pop_up_ketqua">
+
+    <TextView
+        android:id="@+id/tvw_diemso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="270dp"
+        android:text=" 0"
+        android:textSize="50dp" />
+
+
+    <Button
+        android:id="@+id/btn_restart"
+        android:layout_width="188dp"
+        android:layout_height="162dp"
+        android:layout_below="@+id/tvw_diemso"
+        android:layout_marginTop="14dp"
+        android:text="restart"
+        android:textSize="50dp"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
