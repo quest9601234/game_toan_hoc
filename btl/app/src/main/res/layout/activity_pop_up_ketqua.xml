@@ -23,7 +23,7 @@
         android:layout_height="162dp"
         android:layout_below="@+id/tvw_diemso"
         android:layout_marginTop="14dp"
-        android:text="restart"
+        android:background="@drawable/quay_lai"
         android:textSize="50dp"
         android:layout_centerHorizontal="true"/>
 
