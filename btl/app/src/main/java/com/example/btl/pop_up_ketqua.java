@@ -40,7 +40,7 @@ public class pop_up_ketqua extends Activity {
         btn_restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goilai = new Intent(pop_up_ketqua.this,quizActivity.class);
+                Intent goilai = new Intent(pop_up_ketqua.this,MainActivity.class);
                 startActivity(goilai);
             }
         });
@@ -48,4 +48,5 @@ public class pop_up_ketqua extends Activity {
 
 
     }
+
 }
