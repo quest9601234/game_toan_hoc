@@ -1,6 +1,11 @@
 package com.example.btl;
 
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioDeviceCallback;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.btl.R;
 
@@ -15,6 +21,13 @@ import java.util.Locale;
 import java.util.Random;
 
 public class quizActivity extends AppCompatActivity {
+    private long backPressedTime;
+
+    private SoundPool soundPool;
+    public int sound_true,sound_false;
+    private AudioManager audioManager;
+
+
     public static final String DIEMSO = "diemso";
     public static final String EXTRA_SCORE ="extraScore";
     public static final long COUNTDOWN_IN_MILLIS = 3000;
@@ -33,11 +46,44 @@ public class quizActivity extends AppCompatActivity {
         rand1();
         anhxa();
 
+        if (Build.VERSION.SDK_INT >= 21) {
+
+            AudioAttributes audioAttrib = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+
+            SoundPool.Builder soundPool = new SoundPool.Builder();
+            soundPool.setAudioAttributes(audioAttrib).setMaxStreams(3).build();
+
+            //this.soundPool = soundPool.build();
+        } else {
+
+            soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+        }
+
+        sound_true = soundPool.load(this, R.raw.gun, 1);
+        sound_false = soundPool.load(this, R.raw.destroy, 1);
+
+
+
+////        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+////            AudioAttributes audioAttributes = new AudioAttributes().Builder()
+////                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+////                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+////                    .build();
+//
+//
+//        }else{
+//            soundPool =new SoundPool(3, AudioManager.STREAM_MUSIC,0,);
+//        }
+
         dung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int ketquadung=x+y;
                 if(z==ketquadung){
+                    play_sound_true();
                     score++;
                     diem.setText("Score:"+score);
                     countDownTimer.cancel();
@@ -54,7 +100,8 @@ public class quizActivity extends AppCompatActivity {
                     //Intent intent_hienthiketqua = new Intent(quizActivity.this,pop_up_ketqua.class);
                 //startActivity(intent_hienthiketqua);
                 //showSolution();
-                finishQuiz();
+                {   play_sound_false();
+                    finishQuiz();}
             }
         });
         sai.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +109,7 @@ public class quizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int ketquadung=x+y;
                 if(z!=ketquadung){
+                    play_sound_true();
                     score++;
                     diem.setText("Score:"+score);
                     countDownTimer.cancel();
@@ -75,6 +123,7 @@ public class quizActivity extends AppCompatActivity {
                     }
                 }
                 else {
+                    play_sound_false();
                     //Intent intent_hienthiketqua = new Intent(quizActivity.this,pop_up_ketqua.class);
                     //startActivity(intent_hienthiketqua);
                     //showSolution();
@@ -83,6 +132,13 @@ public class quizActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void play_sound_true(){
+        soundPool.play(sound_true,1,1,0,0,1);
+    }
+    public void play_sound_false(){
+        soundPool.play(sound_false,1,1,0,0,1);
     }
 
     public void rand1(){
@@ -151,6 +207,8 @@ public class quizActivity extends AppCompatActivity {
         if(countDownTimer != null){
             countDownTimer.cancel();
         }
+        soundPool.release();
+        soundPool = null;
     }
 
     public void rand2(){
@@ -174,4 +232,15 @@ public class quizActivity extends AppCompatActivity {
         timeLeftInMillis =COUNTDOWN_IN_MILLIS;
         startCountDown();
     }
+    @Override
+    public void onBackPressed() {
+
+            if(backPressedTime + 2000 > System.currentTimeMillis()){
+                showSolution();
+            }else{
+                Toast.makeText(this,"quay lai de ket thuc",Toast.LENGTH_SHORT).show();
+            }
+            backPressedTime =System.currentTimeMillis();
+    }
+
 }
