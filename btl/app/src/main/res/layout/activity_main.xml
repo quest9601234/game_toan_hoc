@@ -7,12 +7,20 @@
     android:background="@drawable/sky"
     tools:context=".MainActivity">
 
+    <ToggleButton
+        android:id="@+id/tg_loa"
+        android:layout_width="107dp"
+        android:layout_height="101dp"
+        android:background="@drawable/loa_bat"
+        android:textOff=" "
+        android:textOn=" " />
+
     <TextView
         android:id="@+id/tvw_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingTop="270dp"
+        android:paddingTop="200dp"
         android:text="1+2=3"
         android:textSize="60dp" />
 
