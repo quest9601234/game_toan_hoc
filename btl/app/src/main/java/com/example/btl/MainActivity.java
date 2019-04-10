@@ -2,14 +2,20 @@ package com.example.btl;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
+    MediaPlayer player;
+
+
     public static final int REQUEST_CODE_QUIZ =1 ;
     public static final String SHARED_PREFS ="sharedPrefs";
     public static final String KEY_HIGHSCORE = "keyHighscore";
@@ -28,7 +34,43 @@ public class MainActivity extends AppCompatActivity {
                 start_play();
             }
         });
+
+        final ToggleButton toogleButton =(ToggleButton)findViewById(R.id.tg_loa);
+        toogleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    play_nhacnen();
+                    toogleButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.loa_tat));
+                }
+                else{
+                    stop_nhacnen();
+                    toogleButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.loa_bat));
+                }
+            }
+        });
     }
+
+    public void play_nhacnen(){
+        if(player == null){
+            player = MediaPlayer.create(this,R.raw.nhacnen1);
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stop_nhacnen();
+                }
+            });
+        }
+        player.start();
+    }
+
+    public void stop_nhacnen(){
+        if(player != null){
+            player.release();
+            player = null;
+        }
+    }
+
     private void start_play(){
         Intent intent_start_play = new Intent(MainActivity.this ,quizActivity.class);
         startActivityForResult(intent_start_play,REQUEST_CODE_QUIZ);
@@ -67,4 +109,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stop_nhacnen();
+    }
 }
